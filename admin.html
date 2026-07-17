@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>待ち時間設定</title>
+
+<style>
+
+body{
+background:#000;
+color:#0ff;
+font-family:monospace;
+height:100vh;
+display:flex;
+justify-content:center;
+align-items:center;
+flex-direction:column;
+}
+
+input{
+padding:15px;
+font-size:24px;
+background:#111;
+color:#0ff;
+border:2px solid #0ff;
+}
+
+button{
+margin-top:20px;
+padding:10px 30px;
+font-size:20px;
+background:black;
+color:#0ff;
+border:2px solid #0ff;
+cursor:pointer;
+}
+
+</style>
+</head>
+<body>
+
+<h1>待ち時間設定</h1>
+
+<input id="value">
+
+<button onclick="save()">
+更新
+</button>
+
+<script>
+
+const GAS_URL =
+"https://script.google.com/macros/s/AKfycbzVzYZLZZelQlv-jOu7AvV3-c1q80pKCDD7BJVNveukzUh3YCKP-3B3usDbSgAvuAS4/exec";
+
+function save(){
+
+const value =
+document.getElementById("value").value;
+
+fetch(GAS_URL,{
+method:"POST",
+body:JSON.stringify({
+value:value
+})
+})
+.then(r=>r.text())
+.then(()=>{
+alert("更新しました");
+});
+
+}
+
+</script>
+
+</body>
+</html>
