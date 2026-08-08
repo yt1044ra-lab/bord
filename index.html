@@ -15,18 +15,36 @@ height:100vh;
 display:flex;
 justify-content:center;
 align-items:center;
-flex-direction:column;
 }
 
 #text{
 font-size:120px;
-text-shadow:0 0 20px #0ff;
 text-align:center;
+text-shadow:0 0 20px #0ff;
+}
+
+#light{
+
+position:fixed;
+top:20px;
+right:20px;
+
+width:30px;
+height:30px;
+
+border-radius:50%;
+
+background:gray;
+
+box-shadow:0 0 20px currentColor;
+
 }
 
 </style>
 </head>
 <body>
+
+<div id="light"></div>
 
 <div id="text">
 読み込み中...
@@ -35,7 +53,7 @@ text-align:center;
 <script>
 
 const GAS_URL =
-"https://script.google.com/macros/s/AKfycbzVzYZLZZelQlv-jOu7AvV3-c1q80pKCDD7BJVNveukzUh3YCKP-3B3usDbSgAvuAS4/exec";
+"ここにGASのURL";
 
 function loadData(){
 
@@ -51,15 +69,45 @@ value !== "" &&
 !isNaN(value)
 ){
 
-document.getElementById("text")
+document
+.getElementById("text")
 .textContent =
 value + "分待ち";
 
 }else{
 
-document.getElementById("text")
+document
+.getElementById("text")
 .textContent =
 value;
+
+}
+
+const light =
+document.getElementById("light");
+
+if(data.status === "available"){
+
+light.style.background =
+"#00aaff";
+
+}
+else if(data.status === "busy"){
+
+light.style.background =
+"red";
+
+}
+else if(data.status === "inactive"){
+
+light.style.background =
+"yellow";
+
+}
+else{
+
+light.style.background =
+"gray";
 
 }
 
