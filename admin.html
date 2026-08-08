@@ -23,11 +23,13 @@ font-size:24px;
 background:#111;
 color:#0ff;
 border:2px solid #0ff;
+width:300px;
+text-align:center;
 }
 
 button{
-margin-top:20px;
-padding:10px 30px;
+margin:10px;
+padding:12px 30px;
 font-size:20px;
 background:black;
 color:#0ff;
@@ -35,24 +37,51 @@ border:2px solid #0ff;
 cursor:pointer;
 }
 
+button:hover{
+box-shadow:0 0 15px #0ff;
+}
+
+.statusButtons{
+margin-top:20px;
+}
+
 </style>
 </head>
+
 <body>
 
 <h1>待ち時間設定</h1>
 
-<input id="value">
+<input
+id="value"
+placeholder="例: 5 / 点検中">
 
-<button onclick="save()">
+<button onclick="saveValue()">
 更新
 </button>
+
+<div class="statusButtons">
+
+<button onclick="setStatus('available')">
+案内可
+</button>
+
+<button onclick="setStatus('busy')">
+案内中
+</button>
+
+<button onclick="setStatus('inactive')">
+不使用
+</button>
+
+</div>
 
 <script>
 
 const GAS_URL =
 "https://script.google.com/macros/s/AKfycbza52ajF9GcRs3zsg5yEqhF_CURiXvi4Z2wMH_XdfWOap9aHGxkWe0S1MB99RL0xu8N/exec";
 
-function save(){
+function saveValue(){
 
 const value =
 document.getElementById("value").value;
@@ -63,10 +92,19 @@ body:JSON.stringify({
 value:value
 })
 })
-.then(r=>r.text())
-.then(()=>{
-alert("更新しました");
-});
+.then(()=>alert("更新しました"));
+
+}
+
+function setStatus(status){
+
+fetch(GAS_URL,{
+method:"POST",
+body:JSON.stringify({
+status:status
+})
+})
+.then(()=>alert("状態更新"));
 
 }
 
